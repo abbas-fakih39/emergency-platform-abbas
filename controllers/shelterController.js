@@ -9,10 +9,6 @@ exports.createShelter = async (req, res) => {
             return res.status(400).json({ message: 'Name, location, and capacity are required' });
         }
 
-        if (!location.coordinates || !Array.isArray(location.coordinates) || location.coordinates.length !== 2) {
-            return res.status(400).json({ message: 'Location coordinates must be an array of [longitude, latitude]' });
-        }
-
         if (!location.address) {
             return res.status(400).json({ message: 'Location address is required' });
         }
@@ -30,8 +26,7 @@ exports.createShelter = async (req, res) => {
             name: name.trim(),
             location: {
                 type: 'Point',
-                coordinates: location.coordinates,
-                address: location.address.trim()
+                address: location.address.trim(),
             },
             capacity: parseInt(capacity),
             current_occupancy: parseInt(current_occupancy) || 0,
